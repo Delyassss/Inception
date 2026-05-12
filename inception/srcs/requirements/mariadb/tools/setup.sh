@@ -1,3 +1,5 @@
+#!/bin/sh
+
 mysqld_safe --datadir=/var/lib/mysql & 
 while ! mysqladmin ping --silent ; do
 sleep 1
