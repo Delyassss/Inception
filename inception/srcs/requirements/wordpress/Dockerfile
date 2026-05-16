@@ -19,4 +19,4 @@ RUN mkdir -p /run/php
 COPY ./tools/setup.sh usr/local/bin/tools/setup.sh
 RUN chmod +x usr/local/bin/tools/setup.sh
 
-ENTRYPOINT ["/tools/setup.sh"]
+ENTRYPOINT ["usr/local/bin/tools/setup.sh"]
