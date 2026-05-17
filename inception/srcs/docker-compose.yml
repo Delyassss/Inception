@@ -1,20 +1,70 @@
 version: '3'
 
-networks:
-  inception_network:
-    driver: bridge
-    name: inception_network
+networks :
+    net :
+        name : myinception_net
+        driver : bridge
 
-volumes:
-  mariadb_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${DATA_PATH}/mariadb
-      o: bind
-  wordpress_data:
-    driver: local
-    driver_opts:
-      type: none
-      device: ${DATA_PATH}/wordpress
-      o: bind
+volumes :
+    maria_database :
+        driver : local
+        driver_opts :
+            type : none # dont use NFS
+            o : bind
+            device : /home/ildaboun/data/mariadb
+
+    wordpress_database :
+        driver : local
+        driver_opts :
+          type : none
+          o : bind
+          device : /home/ildaboun/data/wordpress
+
+
+services :
+    mariadb :
+        container_name : mariadb
+        build : ./mariadb
+        restart : always
+        env_file :
+            - .env
+        expose :
+            - "3306"
+        volumes :
+            - maria_database:/var/lib/mysql
+        networks :
+            - net
+  
+    wordpress :
+        container_name : wordpress
+        build : ./wordpress
+        restart : always
+        env_file :
+            - .env
+        expose :
+            - "9000"
+        volumes :
+          - wordpress_database:/var/www/wordpress
+        networks :
+          - net
+        depends_on :
+            - mariadb
+    
+    nginx :
+      container_name : nginx
+      build : ./nginx
+      restart : always
+      ports :
+          - "443:443"
+      networks :
+          - net
+      volumes :
+        - wordpress_database:/var/www/wordpress
+      depends_on :
+          - mariadb
+          - wordpress
+      
+      
+
+
+

@@ -8,4 +8,4 @@ then
     -subj "/C=MA/ST=BeniMellal/L=Khouribga/O=42/OU=1337/CN=ildaboun.42.fr/UID=ildaboun"
 fi
 
-nginx -g daemon off
+exec nginx -g daemon off

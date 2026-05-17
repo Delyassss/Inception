@@ -3,6 +3,13 @@
 cd /var/www/wordpress
 wp core download --allow-root 
 
+while ! mariadb -h mariadb -u root -p"${MYSQL_PASSWORD}" -e "SELECT 1" > /dev/null 2>&1;
+do 
+    echo "Waiting for MariaDB to be ready..."
+    sleep 3
+done
+
+
 if [ ! -f  wp-config.php ]
     then
 wp config  create --allow-root \
@@ -27,4 +34,4 @@ fi
 
 
 
-php-fpm8.2 -F
+exec php-fpm8.2 -F

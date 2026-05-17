@@ -19,4 +19,4 @@ EOF
 mysqladmin shutdown 
 fi 
 
-exec mysqld_safe --datadir=/var/lib/mysql
+exec mysqld_safe --datadir=/var/lib/mysql # exec is used so the script replaces itself with the main process (mysqld_safe

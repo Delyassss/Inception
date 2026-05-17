@@ -3,6 +3,7 @@ FROM debian:bookworm
 RUN apt-get update -y && apt-get install -y \
     php-fpm \
     php-mysql \
+    mariadb-client \
     wget \
 
 RUN wget -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
