@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd /var/www/wordpress
-wp core download --allow-root 
+wp core download --allow-root  # remember what happens when you mount an volume
 
 while ! mariadb -h mariadb -u root -p"${MYSQL_PASSWORD}" -e "SELECT 1" > /dev/null 2>&1;
 do 
@@ -13,13 +13,14 @@ done
 if [ ! -f  wp-config.php ]
     then
 wp config  create --allow-root \
-           --dbname=${DB_NAME} \
+           --dbname=${MYSQL_NAME} \
             --dbuser=${MYSQL_USER} \
             --dbpass=${MYSQL_PASSWORD} \
-            --dbhost=mariadb:3306
+            --dbhost=mariadb:3306 \
+            --path='/var/www/wordpress'
             
 wp core install --allow-root \
-            --url=ildaboun.42.fr --title="Inception" \
+            --url=${DOMAIN_NAME} --title="Inception" \
             --admin_user=${WP_ADMIN_USER} \
             --admin_password=${WP_ADMIN_PASSWORD} \
             --admin_email=${WP_ADMIN_EMAIL}
