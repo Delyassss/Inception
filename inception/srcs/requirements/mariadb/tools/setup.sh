@@ -16,7 +16,7 @@ GRANT ALL PRIVILEGES ON ${MYSQL_NAME}.* TO '${MYSQL_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF
 
-mysqladmin shutdown  # mysqld by default exit after Injecting so we launch at the end in the backgrounds
+mysqladmin shutdown  # mysqld by default exit after Injecting so we launch at the end in the backgrounds (free port 3306    )
 fi 
 
 exec mysqld_safe --datadir=/var/lib/mysql # exec is used so the script replaces itself with the main process (mysqld_safe

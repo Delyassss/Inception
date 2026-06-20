@@ -9,3 +9,4 @@ then
 fi
 
 exec nginx -g daemon off #exec replaces the current process with another process.
+#daemon off force nginx to stay in the foreground
