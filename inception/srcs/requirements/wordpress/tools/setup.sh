@@ -3,9 +3,13 @@
 cd /var/www/wordpress
 wp core download --allow-root  # remember what happens when you mount an volume
 
+MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD)
+WP_ADMIN_PASSWORD=$(cat /run/secrets/WP_ADMIN_PASSWORD)
+WP_USER_PASSWORD=$(cat /run/secrets/WP_USER_PASSWORD)
+
 while ! mariadb -h mariadb -u root -p"${MYSQL_PASSWORD}" -e "SELECT 1" > /dev/null 2>&1;
 do 
-    echo "Waiting for MariaDB to be ready..."
+    echo "Waiting for MariaDB to be ready..." # why we connect as root ? because we need to create the database and the user for wordpress
     sleep 3
 done
 

@@ -19,15 +19,30 @@ volumes :
           type : none
           o : bind
           device : /home/ildaboun/data/wordpress
+secrets:
+    MYSQL_PASSWORD :
+        file : ./secrets/MYSQL_PASSWORD.txt
+    MYSQL_ROOT_PASSWORD :
+        file : ./secrets/MYSQL_ROOT_PASSWORD.txt
+    WP_ADMIN_PASSWORD :
+        file : ./secrets/WP_ADMIN_PASSWORD.txt
+    WP_USER_PASSWORD :
+        file : ./secrets/WP_USER_PASSWORD.txt
+
+    
+
 
 
 services :
     mariadb :
         container_name : mariadb
-        build : ./mariadb
+        build : ./mariadb # the dockerfile located inside ./mariadb
         restart : always
         env_file :
             - .env
+        secrets :
+            - MYSQL_PASSWORD
+            - MYSQL_ROOT_PASSWORD
         expose :
             - "3306"
         volumes :
@@ -41,6 +56,9 @@ services :
         restart : always
         env_file :
             - .env
+        secrets :
+            - WP_ADMIN_PASSWORD
+            - WP_USER_PASSWORD
         expose :
             - "9000"
         volumes :
@@ -63,6 +81,7 @@ services :
       depends_on :
           - mariadb
           - wordpress
+      
       
       
 

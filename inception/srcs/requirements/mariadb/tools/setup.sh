@@ -3,6 +3,8 @@ if [ ! -d "/var/lib/mysql/mysql" ]; # On Linux systems, /var/lib/ is the standar
 then
     mysql_install_db --user=mysql --datadir=/var/lib/mysql --basedir=/usr > /dev/null 2>$1
 
+MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD)
+MYSQL_ROOT_PASSWORD=$(cat /run/secrets/MYSQL_ROOT_PASSWORD)
 mysqld_safe --datadir=/var/lib/mysql &
  
 while ! mysqladmin ping --silent ; do #while repeats only when the command returns success (exit code 0)
