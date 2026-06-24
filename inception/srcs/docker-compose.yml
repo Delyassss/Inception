@@ -36,7 +36,7 @@ secrets:
 services :
     mariadb :
         container_name : mariadb
-        build : ./mariadb # the dockerfile located inside ./mariadb
+        build : ./requirements/mariadb # the dockerfile located inside ./mariadb
         restart : always
         env_file :
             - .env
@@ -52,7 +52,7 @@ services :
   
     wordpress :
         container_name : wordpress
-        build : ./wordpress
+        build : ./requirements/wordpress
         restart : always
         env_file :
             - .env
@@ -70,7 +70,7 @@ services :
     
     nginx :
       container_name : nginx
-      build : ./nginx
+      build : ./requirements/nginx
       restart : always
       ports :
           - "443:443"
@@ -81,8 +81,14 @@ services :
       depends_on :
           - mariadb
           - wordpress
-      
-      
+    adminer :
+        container_name : adminer
+        build : ./requirements/adminer
+        restart : always
+        expose :
+            - "9000" # it okeey if we used the same port as wordpress, because they are in different containers
+        networks :
+            - net
       
 
 

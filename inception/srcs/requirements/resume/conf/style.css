@@ -1,0 +1,125 @@
+:root    /* this is the root pseudo-class for CSS variables */
+{
+    --bg-main : #0d1117;
+    --text-main: #00ff00;        /* Hacker green */
+    --text-muted: #8b949e;       /* Github dark grey */
+    --accent-blue: #58a6ff;      /* Command-line blue */
+    --accent-red: #ff7b72;       /* Alert red for tech stacks */
+    --border-color: #30363d;     /* Subtle border line */
+
+}
+
+* {
+    box-sizing :border-box; /* Ensure padding and border are included in the element's total width and height */
+    margin : 0; /* Remove default margin */
+    padding : 0; /* Remove default padding */
+
+}
+
+body 
+{
+    background-color : var(--bg-main); /* Set the background color using the CSS variable */
+    color : var(--text-main); /* Set the text color using the CSS variable */
+    font-family : 'Courier New', Courier, monospace; /* Use a monospaced font for a terminal-like appearance */
+    line-height : 1.6; /* Set line height for better readability */
+    padding : 2rem; /* Add padding around the content */
+    display : flex; /* Use flexbox for layout */
+    justify-content : center; /* Center content horizontally */
+}
+
+.container
+{
+    max-width : 800px; /* limit the maximum width of the container */
+    width:  100%; /* Make the container take full width of its parent */
+    border : 1px solid var(--border-color); /* Add a subtle border using the CSS variable */
+    padding : 2.5rem; /* Add padding inside the container */
+    border-radius : 20px; /* Rounded corners for the container */
+    box-shadow : 0 0 25px rgba(0, 255, 0, 0.05); /* Add a subtle shadow for depth */
+}
+
+header
+{
+    border-bottom : 1px dashed var(--border-color); /* Add a dashed border at the bottom of the header */
+    padding-bottom : 1rem; /* Add padding below the header */
+    margin-bottom : 1rem; /* Add margin below the header */
+}
+
+h1
+{
+    color: #ffffff;
+    font-size : 2.5rem; 
+    letter-spacing : 2px; /* Add spacing between letters for a more stylized look */
+}
+
+h2 
+{
+    color : var(--text-muted); /* Use muted text color for subheadings */
+    font-size : 1.25rem; /* Smaller font size for subheadings */
+    margin-bottom : 1rem; /* Add margin below the subheading */
+}
+
+h3 
+{
+    color : var(--accent-blue); /* Use accent blue for tertiary headings */
+    margin-top : 2.5rem; /* Add margin above the tertiary heading */
+    margin-bottom : 1.5rem; /* Add margin below the tertiary heading */
+
+}
+
+.Contact-info
+{
+    color : var(--text-muted); /* Use muted text color for contact information */
+}
+
+.Projects
+{
+    border-left : 2px solid var(--border-color); /* Add a left border to highlight the tech stack section */
+    padding-left : 1rem; /* Add padding to the left of the content */
+    margin-bottom : 1.5rem; /* Add margin below the tech stack section */
+    transition : border-color 0.3s ease; /* Smooth transition for border color on hover */
+}
+
+.Projects:hover
+{
+    border-color : var(--text-main); /* Change border color on hover for interactivity */
+}
+
+h4 
+{
+    color : var(--accent-red); /* Use accent red for project titles */
+    font-size : 1.1rem; /* Slightly larger font size for project titles */
+    margin-bottom : 0.5rem; /* Add margin below the project title */
+}
+h4 span 
+{
+    color : var(--accent-red); /* Use accent red for tech stack details */
+    font-size : 0.9rem; /* Smaller font size for tech stack details */
+    
+}
+
+p
+{
+    margin-bottom : 1rem; /* Add margin below paragraphs for spacing */
+}
+
+footer
+{
+    margin-top : 3rem; /* Add margin above the footer for separation */
+    border-top : 1px dashed var(--border-color); /* Add a dashed border at the top of the footer */
+    padding-top : 1rem; /* Add padding above the footer */
+    text-align : center; /* Center the text in the footer */
+    
+}
+
+a
+{
+    color : var(--accent-blue); /* Use accent blue for links */
+    text-decoration : none; /* Remove underline from links */
+    transition : color 0.3s ease; /* Smooth transition for link color on hover */
+}
+
+a:hover
+{
+    color : var(--text-main); /* Change link color on hover for interactivity */
+    text-decoration : underline; /* Add underline on hover for better visibility */
+}
