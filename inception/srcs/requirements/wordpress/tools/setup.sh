@@ -3,9 +3,9 @@
 cd /var/www/wordpress
 wp core download --allow-root  # remember what happens when you mount an volume
 
-MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD)
-WP_ADMIN_PASSWORD=$(cat /run/secrets/WP_ADMIN_PASSWORD)
-WP_USER_PASSWORD=$(cat /run/secrets/WP_USER_PASSWORD)
+MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD.txt)
+WP_ADMIN_PASSWORD=$(cat /run/secrets/WP_ADMIN_PASSWORD.txt)
+WP_USER_PASSWORD=$(cat /run/secrets/WP_USER_PASSWORD.txt)
 
 while ! mariadb -h mariadb -u root -p"${MYSQL_PASSWORD}" -e "SELECT 1" > /dev/null 2>&1;
 do 
