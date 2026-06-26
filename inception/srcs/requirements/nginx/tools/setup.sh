@@ -8,5 +8,5 @@ then
     -subj "/C=MA/ST=BeniMellal/L=Khouribga/O=42/OU=1337/CN=ildaboun.42.fr/UID=ildaboun"
 fi
 
-exec nginx -g daemon off #exec replaces the current process with another process.
+exec nginx -g "daemon off;" #exec replaces the current process with another process.
 #daemon off force nginx to stay in the foreground
