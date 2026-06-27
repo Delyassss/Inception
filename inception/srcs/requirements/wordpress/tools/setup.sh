@@ -7,7 +7,7 @@ MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD.txt)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/WP_ADMIN_PASSWORD.txt)
 WP_USER_PASSWORD=$(cat /run/secrets/WP_USER_PASSWORD.txt)
 
-while ! mariadb -h mariadb -u root -p"${MYSQL_PASSWORD}" -e "SELECT 1" > /dev/null 2>&1;
+while ! mariadb -h mariadb -u "${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1" > /dev/null 2>&1;
 do 
     echo "Waiting for MariaDB to be ready..." # why we connect as root ? because we need to create the database and the user for wordpress
     sleep 3

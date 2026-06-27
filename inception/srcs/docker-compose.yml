@@ -9,9 +9,9 @@ volumes :
     maria_database :
         driver : local
         driver_opts :
-            type : none # dont use NFS
-            o : bind
-            device : /home/ildaboun/data/mariadb
+            type : none # dont use NFS (Network File System) or tmpfs (temporary file system) for this volume
+            o : bind # this is the option to bind the volume to a specific path on the host machine
+            device : /home/ildaboun/data/mariadb # the path on the host machine where the volume will be mounted
 
     wordpress_database :
         driver : local
@@ -89,6 +89,15 @@ services :
             - "9000" # it okeey if we used the same port as wordpress, because they are in different containers
         networks :
             - net
+    resume : 
+        container_name : resume
+        build : ./requirements/resume
+        restart : always
+        expose :
+            - "3000"
+        networks :
+            - net
+            
       
 
 
