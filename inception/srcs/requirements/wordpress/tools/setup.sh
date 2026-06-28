@@ -32,7 +32,7 @@ wp config  create --allow-root \
             --path='/var/www/wordpress'
 
 wp config set  WP_REDIS_HOST redis --allow-root
-wp config set WP_REDIS_PORT 6379 --raw --allow-root
+wp config set WP_REDIS_PORT 6379 --raw --allow-root # --raw remove the "" and treat the value as it is
 
 wp core install --allow-root \
             --url=${DOMAIN_NAME} --title="Inception" \

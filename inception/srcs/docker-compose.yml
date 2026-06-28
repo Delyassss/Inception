@@ -28,6 +28,8 @@ secrets:
         file : ./secrets/WP_ADMIN_PASSWORD.txt
     WP_USER_PASSWORD :
         file : ./secrets/WP_USER_PASSWORD.txt
+    FTP_PASSWORD :
+        file : ./secrets/FTP_PASSWORD.txt
 
     
 
@@ -107,6 +109,20 @@ services :
             - "6379"
         networks:
             - net
+
+    ftp : 
+        container_name : ftp
+        build : ./requirements/ftp
+        restart : always
+        secrets :
+            - FTP_PASSWORD
+        networks:
+            - net
+        volume :
+            -wordpress_database:/var/www/wordpress
+        port :
+            
+    
       
 
 
