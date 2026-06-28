@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # i used setup.sh here for security , ENV variable shouldnt be part of the docker inage 
 
 
@@ -13,6 +14,8 @@ useradd -u 33 -d /var/www/wordpress "${FTP_USER}"
 
 
 echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
+
+
 
 exec vsftpd "/etc/vsftpd.conf"
 

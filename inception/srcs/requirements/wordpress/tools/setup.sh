@@ -24,6 +24,8 @@ if [ ! -f  wp-config.php ]
     then
 wp core download --allow-root  # remember what happens when you mount an volume
 
+chown -R www-data:www-data /var/www/wordpress/
+
 wp config  create --allow-root \
            --dbname=${MYSQL_NAME} \
             --dbuser=${MYSQL_USER} \

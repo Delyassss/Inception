@@ -5,11 +5,9 @@ RUN apt-get update && apt-get install -y \
     vsftpd  && rm -rf /var/lib/apt/lists/*
 
 
-RUN sed -i "s|#local_enable=YES|local_enable=YES|" /etc/vsftpd.conf \
-&& sed -i "s|#write_enable=YES|write_enable=YES|" /etc/vsftpd.conf \
-&& sed -i "s|#chroot_local_user=YES|chroot_local_user=YES|" /etc/vsftpd.conf \ 
-&& echo "allow_writeable_chroot=YES" >> /etc/vsftpd.conf
-# if you jail a user in a folder , that folder cant be writable that what why we use the lase cmd
+COPY conf/vsftpd.conf /etc/vsftpd.conf
+
+# if you jail a user in a folder , and he has [write_enable=YES] vsftpd deny and throw an error that why we use allow_writeable_chroot=YES
 
 
 # a user should be unprivileged to log into the vsftpd 
@@ -17,5 +15,6 @@ RUN sed -i "s|#local_enable=YES|local_enable=YES|" /etc/vsftpd.conf \
 COPY tools/setup.sh /home/setup.sh
 RUN chmod +x /home/setup.sh
 
+EXPOSE 21
 
 ENTRYPOINT [ "/home/setup.sh" ]
