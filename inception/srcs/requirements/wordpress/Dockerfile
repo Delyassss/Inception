@@ -4,6 +4,7 @@ RUN apt-get update -y && apt-get install -y \
     php-fpm \
     php-mysql \
     mariadb-client \
+    redis-tools \
     wget 
 
 RUN wget -O wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \

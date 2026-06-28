@@ -1,7 +1,7 @@
 #!/bin/sh
 
 cd /var/www/wordpress
-wp core download --allow-root  # remember what happens when you mount an volume
+
 
 MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD.txt)
 WP_ADMIN_PASSWORD=$(cat /run/secrets/WP_ADMIN_PASSWORD.txt)
@@ -13,16 +13,27 @@ do
     sleep 3
 done
 
+while ! redis-cli -h redis -p 6379 ping > /dev/null 2>&1| grep -i "POng" > /dev/null;
+do 
+    echo "Waiting for Redis to be ready..."
+sleep 3
+done 
+
 
 if [ ! -f  wp-config.php ]
     then
+wp core download --allow-root  # remember what happens when you mount an volume
+
 wp config  create --allow-root \
            --dbname=${MYSQL_NAME} \
             --dbuser=${MYSQL_USER} \
             --dbpass=${MYSQL_PASSWORD} \
             --dbhost=mariadb:3306 \
             --path='/var/www/wordpress'
-            
+
+wp config set  WP_REDIS_HOST redis --allow-root
+wp config set WP_REDIS_PORT 6379 --raw --allow-root
+
 wp core install --allow-root \
             --url=${DOMAIN_NAME} --title="Inception" \
             --admin_user=${WP_ADMIN_USER} \
@@ -34,6 +45,11 @@ wp user create --allow-root \
             ${WP_USER_EMAIL} \
             --user_pass=${WP_USER_PASSWORD} \
             --role=author
+
+wp plugin install redis-cache --activate --allow-root
+
+wp redis enable --allow-root # completes the setup by generating the physical object cache script (object-cache.php) inside your wp-content folder 
+
 fi 
 
 
