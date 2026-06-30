@@ -21,17 +21,17 @@ volumes :
           device : /home/ildaboun/data/wordpress
 secrets:
     MYSQL_PASSWORD :
-        file : ./secrets/MYSQL_PASSWORD.txt
+        file : ../secrets/MYSQL_PASSWORD.txt
     MYSQL_ROOT_PASSWORD :
-        file : ./secrets/MYSQL_ROOT_PASSWORD.txt
+        file : ../secrets/MYSQL_ROOT_PASSWORD.txt
     WP_ADMIN_PASSWORD :
-        file : ./secrets/WP_ADMIN_PASSWORD.txt
+        file : ../secrets/WP_ADMIN_PASSWORD.txt
     WP_USER_PASSWORD :
-        file : ./secrets/WP_USER_PASSWORD.txt
+        file : ../secrets/WP_USER_PASSWORD.txt
     FTP_PASSWORD :
-        file : ./secrets/FTP_PASSWORD.txt
+        file : ../secrets/FTP_PASSWORD.txt
 
-    
+
 
 
 
@@ -51,7 +51,7 @@ services :
             - maria_database:/var/lib/mysql
         networks :
             - net
-  
+
     wordpress :
         container_name : wordpress
         build : ./requirements/wordpress
@@ -61,6 +61,7 @@ services :
         secrets :
             - WP_ADMIN_PASSWORD
             - WP_USER_PASSWORD
+            - MYSQL_PASSWORD
         expose :
             - "9000"
         volumes :
@@ -70,7 +71,7 @@ services :
         depends_on :
             - mariadb
             - redis
-    
+
     nginx :
       container_name : nginx
       build : ./requirements/nginx
@@ -80,7 +81,7 @@ services :
       networks :
           - net
       volumes :
-        - wordpress_database:/var/www/wordpress
+        - wordpress_database:/var/www/wordpress # named volume
       depends_on :
           - mariadb
           - wordpress
@@ -92,7 +93,7 @@ services :
             - "9000" # it okeey if we used the same port as wordpress, because they are in different containers
         networks :
             - net
-    resume : 
+    resume :
         container_name : resume
         build : ./requirements/resume
         restart : always
@@ -100,17 +101,17 @@ services :
             - "3000"
         networks :
             - net
-    
+
     redis :
         container_name : redis
         build : ./requirements/redis
         restart : always
-        expose :  
+        expose :
             - "6379"
         networks:
             - net
 
-    ftp : 
+    ftp :
         container_name : ftp
         build : ./requirements/ftp
         restart : always
@@ -118,17 +119,32 @@ services :
             - FTP_PASSWORD
         networks:
             - net
-        volume :
+        volumes :
             - wordpress_database:/var/www/wordpress
-        port :
+        ports :
             - "21:21"
             - "40000-40005:40000-40005"
         depends_on :
             - wordpress
+        env_file :
+            - .env
+    cadvisor :
+        container_name : cadvisor
+        build : ./requirements/cadvisor
+        restart : always
+        expose :
+            -  "8080"
+        volumes :
+            - /var/run:/var/run:ro # ask docker.sock for the container X name, the docker.sock memmory isnt fixed that why we bind the whole /var directory
+            - /sys:/sys:ro # resource usage
+            - /:/rootFiles:ro # check the total size
+            - /var/lib/docker:/dockerLayers:ro # track overlayfs
+        networks :
+            - net
 
-            
-    
-      
+
+
+
 
 
 

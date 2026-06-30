@@ -3,7 +3,7 @@
 # i used setup.sh here for security , ENV variable shouldnt be part of the docker inage 
 
 
-FTP_PASSWORD=$(cat /run/secrets/FTP_PASSWORD.txt)
+FTP_PASSWORD=$(cat /run/secrets/FTP_PASSWORD)
 
 
 # -d: Set their home exactly to the shared volume
