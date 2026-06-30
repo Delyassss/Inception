@@ -5,8 +5,8 @@ nginx \
 openssl \
 && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /etc/nginx/ssl
-
+RUN mkdir -p /etc/nginx/ssl 
+# when nginx start as root it takes the cerft and load it into the ram 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 COPY tools/setup.sh  /tools/setup.sh
 
