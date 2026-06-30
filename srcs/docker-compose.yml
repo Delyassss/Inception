@@ -21,15 +21,15 @@ volumes :
           device : /home/ildaboun/data/wordpress
 secrets:
     MYSQL_PASSWORD :
-        file : ./secrets/MYSQL_PASSWORD.txt
+        file : ../secrets/MYSQL_PASSWORD.txt
     MYSQL_ROOT_PASSWORD :
-        file : ./secrets/MYSQL_ROOT_PASSWORD.txt
+        file : ../secrets/MYSQL_ROOT_PASSWORD.txt
     WP_ADMIN_PASSWORD :
-        file : ./secrets/WP_ADMIN_PASSWORD.txt
+        file : ../secrets/WP_ADMIN_PASSWORD.txt
     WP_USER_PASSWORD :
-        file : ./secrets/WP_USER_PASSWORD.txt
+        file : ../secrets/WP_USER_PASSWORD.txt
     FTP_PASSWORD :
-        file : ./secrets/FTP_PASSWORD.txt
+        file : ../secrets/FTP_PASSWORD.txt
 
     
 
@@ -61,6 +61,7 @@ services :
         secrets :
             - WP_ADMIN_PASSWORD
             - WP_USER_PASSWORD
+            - MYSQL_PASSWORD
         expose :
             - "9000"
         volumes :
@@ -118,14 +119,15 @@ services :
             - FTP_PASSWORD
         networks:
             - net
-        volume :
+        volumes :
             - wordpress_database:/var/www/wordpress
-        port :
+        ports :
             - "21:21"
             - "40000-40005:40000-40005"
         depends_on :
             - wordpress
-
+        env_file : 
+            - .env
             
     
       

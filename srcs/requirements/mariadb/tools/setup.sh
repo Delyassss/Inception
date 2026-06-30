@@ -8,8 +8,9 @@ then
 # the mysql user should own the files
 
 
-MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD.txt)
-MYSQL_ROOT_PASSWORD=$(cat /run/secrets/MYSQL_ROOT_PASSWORD.txt)
+MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD)
+MYSQL_ROOT_PASSWORD=$(cat /run/secrets/MYSQL_ROOT_PASSWORD)
+
 echo "launching mariadb in the background"
   
 mysqld_safe --datadir=/var/lib/mysql & # mysqld_safe is a wrapper script that starts the mysqld server and monitors it, restarting it if it crashes. It also provides some additional features, such as logging and error handling.
@@ -20,9 +21,11 @@ sleep 1
 done
 
 echo "Creating the Database"
-mysql -u root << EOF
+
+mysql -u root  << EOF
 CREATE DATABASE IF NOT EXISTS \`${MYSQL_NAME}\`;
-CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}' ;
+CREATE USER IF NOT EXISTS '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
+ALTER USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';
 GRANT ALL PRIVILEGES ON \`${MYSQL_NAME}\`.* TO '${MYSQL_USER}'@'%';
 FLUSH PRIVILEGES;
 EOF

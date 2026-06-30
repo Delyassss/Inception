@@ -3,9 +3,9 @@
 cd /var/www/wordpress
 
 
-MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD.txt)
-WP_ADMIN_PASSWORD=$(cat /run/secrets/WP_ADMIN_PASSWORD.txt)
-WP_USER_PASSWORD=$(cat /run/secrets/WP_USER_PASSWORD.txt)
+MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD)
+WP_ADMIN_PASSWORD=$(cat /run/secrets/WP_ADMIN_PASSWORD)
+WP_USER_PASSWORD=$(cat /run/secrets/WP_USER_PASSWORD)
 
 while ! mariadb -h mariadb -u "${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1" > /dev/null 2>&1;
 do 
@@ -13,7 +13,7 @@ do
     sleep 3
 done
 
-while ! redis-cli -h redis -p 6379 ping > /dev/null 2>&1| grep -i "POng" > /dev/null;
+while ! redis-cli -h redis -p 6379 ping > /dev/null 2>&1 | grep -i "POng" > /dev/null;
 do 
     echo "Waiting for Redis to be ready..."
 sleep 3
