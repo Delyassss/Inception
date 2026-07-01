@@ -8,16 +8,16 @@ WP_ADMIN_PASSWORD=$(cat /run/secrets/WP_ADMIN_PASSWORD)
 WP_USER_PASSWORD=$(cat /run/secrets/WP_USER_PASSWORD)
 
 while ! mariadb -h mariadb -u "${MYSQL_USER}" -p"${MYSQL_PASSWORD}" -e "SELECT 1" > /dev/null 2>&1;
-do 
+do
     echo "Waiting for MariaDB to be ready..." # why we connect as root ? because we need to create the database and the user for wordpress
     sleep 3
 done
 
 while ! redis-cli -h redis -p 6379 ping > /dev/null 2>&1 | grep -i "POng" > /dev/null;
-do 
+do
     echo "Waiting for Redis to be ready..."
 sleep 3
-done 
+done
 
 
 if [ ! -f  wp-config.php ]
@@ -50,11 +50,11 @@ wp user create --allow-root \
 
 wp plugin install redis-cache --activate --allow-root
 
-wp redis enable --allow-root # completes the setup by generating the physical object cache script (object-cache.php) inside your wp-content folder 
+wp redis enable --allow-root # completes the setup by generating the physical object cache script (object-cache.php) inside your wp-content folder
 
-fi 
-
-
+fi
 
 
-exec php-fpm8.2 -F
+
+
+exec php-fpm8.2 -F # the engine need to run as root just for a couple seconds until it bind the port then php fpm spawn a pool of processes as www:data user 
