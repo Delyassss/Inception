@@ -4,7 +4,7 @@ RUN apt-get update -y && apt-get install -y \
     php-fpm \
     php-mysql \
     mariadb-client \
-    wget
+    wget \
     redis-tools \
     wget
 
