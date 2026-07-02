@@ -13,7 +13,7 @@ do
     sleep 3
 done
 
-while ! redis-cli -h redis -p 6379 ping > /dev/null 2>&1 | grep -i "POng" > /dev/null;
+while ! redis-cli -h redis -p 6379 ping > /dev/null | grep -i "POng" > /dev/null 2>&1;
 do
     echo "Waiting for Redis to be ready..."
 sleep 3
@@ -57,4 +57,4 @@ fi
 
 
 
-exec php-fpm8.2 -F # the engine need to run as root just for a couple seconds until it bind the port then php fpm spawn a pool of processes as www:data user 
+exec php-fpm8.2 -F # the engine need to run as root just for a couple seconds until it bind the port then php fpm spawn a pool of processes as www:data user

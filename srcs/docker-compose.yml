@@ -137,10 +137,19 @@ services :
         volumes :
             - /var/run:/var/run:ro # ask docker.sock for the container X name, the docker.sock memmory isnt fixed that why we bind the whole /var directory
             - /sys:/sys:ro # resource usage
-            - /:/rootFiles:ro # check the total size
-            - /var/lib/docker:/dockerLayers:ro # track overlayfs
+            - /:/rootfs:ro # check the total size
+            - /var/lib/docker:/var/lib/docker:ro # track overlayfs
+            - /dev/disk/:/dev/disk:ro
         networks :
             - net
+
+
+
+
+
+
+
+
 
 
 
