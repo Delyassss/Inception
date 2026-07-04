@@ -22,21 +22,24 @@ then
 	echo "USER ${FTP_USER} already exists"
 else
 
-useradd -m "${FTP_USER}"
+mkdir -p /var/www/wordpress
+
+useradd -d /var/www/wordpress "${FTP_USER}"
 
 
 echo "$FTP_USER:$FTP_PASSWORD" | chpasswd
 
 
 usermod -aG www-data "${FTP_USER}"
+
 echo $FTP_USER >> /etc/vsftpd.user_list # allow this user to connect
 
+chmod 777 /var/www/wordpress
 fi
+
 echo "Starting ..."
 mkdir -p /var/run/vsftpd/empty # vsftpd reates a temporary clone of itself (a worker process) to talk to the visitor but strips all root priv the clone process is located at that path
 
 chmod 600 /etc/vsftpd.conf
 # the cloned process only job is to handle the net traffic and authentication
 exec vsftpd /etc/vsftpd.conf
-
-

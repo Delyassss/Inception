@@ -13,7 +13,7 @@ do
     sleep 3
 done
 
-while ! redis-cli -h redis -p 6379 ping > /dev/null | grep -i "POng" > /dev/null 2>&1;
+while ! redis-cli -h redis -p 6379 ping | grep -i "POng" > /dev/null 2>&1;
 do
     echo "Waiting for Redis to be ready..."
 sleep 3
