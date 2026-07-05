@@ -39,7 +39,7 @@ services :
     mariadb :
         container_name : mariadb
         build : ./requirements/mariadb # the dockerfile located inside ./mariadb
-        restart : always
+        restart : on-failure
         env_file :
             - .env
         secrets :
@@ -55,7 +55,7 @@ services :
     wordpress :
         container_name : wordpress
         build : ./requirements/wordpress
-        restart : always
+        restart : on-failure
         env_file :
             - .env
         secrets :
@@ -75,7 +75,7 @@ services :
     nginx :
       container_name : nginx
       build : ./requirements/nginx
-      restart : always
+      restart : on-failure
       ports :
           - "443:443"
       networks :
@@ -88,7 +88,7 @@ services :
     adminer :
         container_name : adminer
         build : ./requirements/adminer
-        restart : always
+        restart : on-failure
         expose :
             - "9000" # it okeey if we used the same port as wordpress, because they are in different containers
         networks :
@@ -96,7 +96,7 @@ services :
     resume :
         container_name : resume
         build : ./requirements/resume
-        restart : always
+        restart : on-failure
         expose :
             - "3000"
         networks :
@@ -105,7 +105,7 @@ services :
     redis :
         container_name : redis
         build : ./requirements/redis
-        restart : always
+        restart : on-failure
         expose :
             - "6379"
         networks:
@@ -114,7 +114,7 @@ services :
     ftp :
         container_name : ftp
         build : ./requirements/ftp
-        restart : always
+        restart : on-failure
         secrets :
             - FTP_PASSWORD
         networks:
@@ -131,7 +131,7 @@ services :
     cadvisor :
         container_name : cadvisor
         build : ./requirements/cadvisor
-        restart : always
+        restart : on-failure
         expose :
             -  "8080"
         volumes :

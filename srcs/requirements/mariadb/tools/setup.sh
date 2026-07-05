@@ -4,7 +4,7 @@
 if [ ! -d "/var/lib/mysql/${MYSQL_NAME}" ]; # On Linux systems, /var/lib/ is the standard location for persistent variable data
 
 then
-    mysql_install_db --user=mysql --datadir=/var/lib/mysql --basedir=/usr > /dev/null 2>&1
+	mysql_install_db --user=mysql --datadir=/var/lib/mysql --basedir=/usr > /dev/null 2>&1
 # the mysql user should own the files
 
 
@@ -12,8 +12,8 @@ MYSQL_PASSWORD=$(cat /run/secrets/MYSQL_PASSWORD)
 MYSQL_ROOT_PASSWORD=$(cat /run/secrets/MYSQL_ROOT_PASSWORD)
 
 if [ -z "$MYSQL_PASSWORD" ]; then
-    echo "ERROR: MYSQL_PASSWORD variable is empty!"  >> /home/output.log
-    exit 1
+	echo "ERROR: MYSQL_PASSWORD variable is empty!"  >> /home/output.log
+	exit 1
 fi
 
 
@@ -21,9 +21,14 @@ echo "launching mariadb in the background"  >> /home/output.log
 
 mysqld_safe --datadir=/var/lib/mysql & # mysqld_safe is a wrapper script that starts the mysqld server and monitors it, restarting it if it crashes. It also provides some additional features, such as logging and error handling.
 
+i = 1
 while ! mysqladmin ping --silent ; do # while repeats only when the command returns success (exit code 0)
-echo "mariadb not ready yet..."  >> /home/output.log
-sleep 1
+	echo "mariadb not ready yet..."  >> /home/output.log
+	sleep 1
+	((i++))
+	if ((i > 10)); then
+		exit 1
+	fi
 done
 
 echo "Creating the Database" >> /home/output.log
