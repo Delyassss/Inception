@@ -21,7 +21,7 @@ echo "launching mariadb in the background"  >> /home/output.log
 
 mysqld_safe --datadir=/var/lib/mysql & # mysqld_safe is a wrapper script that starts the mysqld server and monitors it, restarting it if it crashes. It also provides some additional features, such as logging and error handling.
 
-i = 1
+i=1
 while ! mysqladmin ping --silent ; do # while repeats only when the command returns success (exit code 0)
 	echo "mariadb not ready yet..."  >> /home/output.log
 	sleep 1
