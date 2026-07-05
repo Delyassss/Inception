@@ -10,7 +10,7 @@ if [ ! -f /etc/ssl/certs/vsftpd.crt ]
 	openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/ssl/private/vsftpd.key \
     -out /etc/ssl/certs/vsftpd.crt \
-    -subj "/C=MA/ST=BeniMellal/L=Khouribga/O=1337/CN=idabouno.42.fr"
+    -subj "/C=MA/ST=BeniMellal/L=Khouribga/O=1337/CN=ildaboun.42.fr"
 fi
 
 # -d: Set their home exactly to the shared volume
