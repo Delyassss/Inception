@@ -28,15 +28,15 @@ secrets:
 
 up :
 	@echo "Starting Inception infrastructure..."
-	docker-compose -f ./srcs/docker-compose.yml up -d --build
+	docker compose -f ./srcs/docker-compose.yml up -d --build
 
 down :
-	docker-compose -f ./srcs/docker-compose.yml down
+	docker compose -f ./srcs/docker-compose.yml down
 
 fclean :
 	@echo "Total wipe of the infrastructure..."
 	rm -rf ${DATA_PATH} ${SRCS_PATH}
-	docker-compose -f ./srcs/docker-compose.yml down -v --rmi all
+	docker compose -f ./srcs/docker-compose.yml down -v --rmi all
 
 
 re : fclean all
