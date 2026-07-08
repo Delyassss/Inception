@@ -35,7 +35,7 @@ down :
 
 fclean :
 	@echo "Total wipe of the infrastructure..."
-	rm -rf ${DATA_PATH} ${SRCS_PATH}
+	rm -rf ${DATA_PATH}
 	docker compose -f ./srcs/docker-compose.yml down -v --rmi all
 
 
